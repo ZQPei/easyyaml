@@ -6,9 +6,9 @@ setup(
     author='ZQPei',
     author_email='dfzspzq@163.com',
     packages=['easyyaml'],
-    install_requires=["huster", 
-                    "numpy", 
-                    "dominate"],
+    install_requires=[
+        "pyyaml",
+        ],
     # scripts=['utils/build_server_scripts'],
     url='https://github.com/ZQPei/easyyaml',
     description='Easy yaml parser and editer',
