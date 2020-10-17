@@ -11,11 +11,11 @@ _yaml_ext = ('.yml', '.yaml')
 def _is_valid_key(key:str, invalid_key_list:list=None) -> None:
     if not (isinstance(key, str) and key and key.replace('_', '').isalnum() and not key[0].isdecimal()) \
         or (invalid_key_list and key in invalid_key_list):
-        raise ValueError("Invalid Key: %s"%(key))
+        raise KeyError("Invalid Key: %s"%(key))
 
 def _is_valid_value(value):
     if not isinstance(value, (type(None), str, int, float, tuple, list, dict)):
-        raise ValueError("Invalid Value: %s"%(str(value)))
+        raise TypeError("Invalid Value: %s"%(str(value)))
 
 def _idx2key(idx):
     return "_%d"%(idx)

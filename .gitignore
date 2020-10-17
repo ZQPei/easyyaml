@@ -9,3 +9,5 @@ MANIFEST
 MANIFEST.in
 
 *.egg-info/
+
+*.yaml
