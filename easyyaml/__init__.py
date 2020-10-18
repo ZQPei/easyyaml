@@ -3,9 +3,11 @@ from __future__ import absolute_import
 import os
 import yaml
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
-_yaml_ext = ('.yml', '.yaml')
+__yaml_ext__ = ('.yml', '.yaml')
+__test_yaml_file__ = os.path.join(__path__[0], "test.yaml")
+__temp_yaml_file__ = "./temp.yaml"
 
 
 def _is_valid_key(key:str, invalid_key_list:list=None) -> None:
@@ -35,8 +37,9 @@ class YamlDict(dict):
         _is_valid_key(key, dict.__dict__.keys())
         _is_valid_value(value)
         if isinstance(value, (tuple, list)):
-            value = YamlList([self.__class__(x) 
-                                if isinstance(x, dict) else x for x in value])
+            value = YamlList(value)
+            # value = YamlList([self.__class__(x) 
+            #                     if isinstance(x, dict) else x for x in value])
         elif isinstance(value, dict):
             value = self.__class__(value)
         super(YamlDict, self).__setattr__(key, value)
@@ -102,11 +105,10 @@ class YamlList(list):
 
     def pop(self, index:int=None):
         idx = index or len(self)-1
-        delattr(self, _idx2key(idx))
-        if index:
-            super(YamlList, self).pop(index)
-        else:
-            super(YamlList, self).pop()
+        for i in range(idx, len(self)-1):
+            self[i] = self[i+1]
+        delattr(self, _idx2key(len(self)-1))
+        super(YamlList, self).pop()
 
     def to_list(self):
         l = []
@@ -120,7 +122,7 @@ class YamlList(list):
 
 
 def load(yaml_file):
-    assert isinstance(yaml_file, str) and os.path.isfile(yaml_file)
+    assert isinstance(yaml_file, str) and os.path.isfile(yaml_file) and os.path.splitext(yaml_file)[-1] in __yaml_ext__, "invalid file: %s"%(yaml_file)
     with open(yaml_file, 'r') as foo:
         yaml_data = yaml.load(foo)
 
@@ -131,27 +133,22 @@ def load(yaml_file):
 
 def save(yaml_file, yaml_data): 
     assert isinstance(yaml_file, str)
+
     if isinstance(yaml_data, list):
         yaml_data = yaml_data.to_list()
     elif isinstance(yaml_data, dict):
         yaml_data = yaml_data.to_dict()
+
     with open(yaml_file, 'w') as foo:
         yaml.dump(yaml_data, foo)
 
+def test(dst_file, src_file):
+    yd = load(src_file)
+    print(yd)
+    save(dst_file, yd)
+
 
 if __name__ == '__main__':
-    ydict = YamlDict
-    d = {'a': 123, 'b': 234, '_0': 345, '_1000':456, '_1xyz': 567, "test": {'c':[{"e":123}, 0, 1, 2], 'd':222}}
-    yd = ydict(d)
-
-    ylist = YamlList
-    l = d.keys()
-    yl = ylist(l)
-
-    import ipdb; ipdb.set_trace()
-
-    yd = load("./example.yaml")
-
-    save("./temp.yaml", yd)
+    test("temp.yaml", __test_yaml_file__)
 
     

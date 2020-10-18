@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='easyyaml',
-    version='0.0.1',
+    version='0.0.2',
     author='ZQPei',
     author_email='dfzspzq@163.com',
     packages=['easyyaml'],

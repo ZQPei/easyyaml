@@ -1,0 +1,21 @@
+name: easyyaml
+list: 
+  - 0
+  - list
+  - in
+  - dict
+  - dict: 0
+    in: 1
+    list: 2 
+
+  - 'aaa'
+  - 'bbb'
+  - 'ccc': 234
+  - - - 'a345': [1,2,3]
+      - 456
+    - 234
+
+dict: 
+  thanks: 
+    for: 
+      using: eyaml
