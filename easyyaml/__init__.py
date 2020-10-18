@@ -149,6 +149,6 @@ def test(dst_file, src_file):
 
 
 if __name__ == '__main__':
-    test("temp.yaml", __test_yaml_file__)
+    test("./temp.yaml", __test_yaml_file__)
 
     

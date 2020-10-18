@@ -9,8 +9,8 @@ setup(
     install_requires=[
         "pyyaml",
         ],
-    # scripts=['utils/build_server_scripts'],
     url='https://github.com/ZQPei/easyyaml',
+    include_package_data=True,
     description='Easy yaml parser and editer',
     long_description=open('./README.md', 'r').read(), 
     long_description_content_type="text/markdown",

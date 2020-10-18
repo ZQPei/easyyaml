@@ -7,7 +7,6 @@ def main():
     for _ in range(4):
         yd.list.pop()
     yd.name = "this_is_a_simple_example_of_eyaml"
-    import ipdb; ipdb.set_trace()
     eyaml.save(eyaml.__temp_yaml_file__, yd)
 
 
