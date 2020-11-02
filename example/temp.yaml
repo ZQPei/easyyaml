@@ -1,0 +1,10 @@
+dict:
+  thanks:
+    for: {using: eyaml}
+list:
+- 0
+- list
+- in
+- dict
+- {dict: 0, in: 1, list: 2}
+name: this_is_a_simple_example_of_eyaml

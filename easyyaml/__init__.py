@@ -50,7 +50,7 @@ class YamlDict(dict):
     def update(self, d:dict=None, **kwargs):
         d = d or {}
         d.update(kwargs)
-        for k, v in d:
+        for k, v in d.items():
             setattr(self, k, v)
 
     def pop(self, k:str, default=None):
@@ -142,10 +142,27 @@ def save(yaml_file, yaml_data):
     with open(yaml_file, 'w') as foo:
         yaml.dump(yaml_data, foo)
 
+def show(yaml_data):
+    assert isinstance(yaml_data, (list, tuple, YamlList, YamlDict)), "invalid input"
+    import shutil
+    columns = shutil.get_terminal_size().columns
+    print("YAML_DATA".center(columns, "="))
+
+    if isinstance(yaml_data, (list, YamlList)):
+        for x in yaml_data:
+            print("%s"%(x))
+    elif isinstance(yaml_data, (dict, YamlDict)):
+        max_key_len = max([len(k) for k in yaml_data.keys()])
+        for k, v in yaml_data.items():
+            print("%s: %s"%(k.ljust(max_key_len), v))
+    print()
+
+
 def test(dst_file, src_file):
     yd = load(src_file)
     print(yd)
     save(dst_file, yd)
+    show(yd)
 
 
 if __name__ == '__main__':
